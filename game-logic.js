@@ -3,24 +3,21 @@
 // Number 1 -> Paper 
 // Number 2 -> Scissors
 
-// Create variables to keep track of game score
+// Initialise variables to keep track of game score
 let computerScore = 0; 
 let userScore = 0;
 
 function getComputerChoice(){
-    // Randomise Choice process through Math.random(); as we have 3 choices, multiply result by 3.
-    // If random num <= 1, pick rock; elif num between 1(excl.) and 2(incl.), pick paper; else pick scissors
+    // Randomise selection process through Math.random(); as we have 3 choices, multiply result by 3
     const random_num = Math.floor(Math.random() * 3); 
-    // Return a random number and round it down to an integer 
-    console.log(`Random num: ${random_num}`);
     return random_num;
 }
 
 function getUserChoice(){
     // Ask user for a string input, spelling must be correct, but case sensitiveness does not make a difference
-    // Return user choice as number for easy comparison in playRound func
     const userInput = prompt('Enter your rock, paper, scissors Choice below: ').toLowerCase(); 
     // Convert input text to lowercase for consistency
+    // Return user choice as number for easy comparison in playRound func
     if (userInput === 'rock') {
         return 0;
     } else if (userInput === 'paper') {
