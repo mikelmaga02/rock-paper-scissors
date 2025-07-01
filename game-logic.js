@@ -13,26 +13,24 @@ function getComputerChoice(){
     return random_num;
 }
 
-function getUserChoice(){
-    // Ask user for a string input, spelling must be correct, but case sensitiveness does not make a difference
-    const userInput = prompt('Enter your rock, paper, scissors Choice below: ').toLowerCase(); 
-    // Convert input text to lowercase for consistency
-    // Return user choice as number for easy comparison in playRound func
-    if (userInput === 'rock') {
-        return 0;
-    } else if (userInput === 'paper') {
-        return 1;
-    }
-    else {
-        return 2;
-    }
-}
+let buttonContainer = document.querySelector(".button-container");
+buttonContainer.addEventListener('click', function clicker(event) {
+    let target = event.target;
 
+    switch(target.id) {
+        case 'rock':
+            playRound(getComputerChoice(), 0)
+            break;
+        case 'paper':
+            playRound(getComputerChoice(), 1)
+            break;
+        case 'scissors':
+            playRound(getComputerChoice(), 2)
+            break;
+    }
+});
 
-function playRound(){
-    // Call computer and user choice functions, compare results according to game logic
-    const computerChoice = getComputerChoice();
-    const userChoice = getUserChoice();
+function playRound(computerChoice, userChoice){
     // No need to check draws
     if (computerChoice === 0 && userChoice === 2){
         // Rock beats scissors
@@ -59,16 +57,16 @@ function playRound(){
 }
 
 
-function playGame(){
-    let roundWinner;
-    for (let i=0; i<5; i++){
-        playRound();
-    }
-    if (userScore !== computerScore){
-        roundWinner = userScore > computerScore ? "user" : "computer";
-        return 'The winner is the ' + roundWinner;
-    }
-    else {
-        return 'We have a draw!';
-    }
-}
+// function playGame(){
+//     let roundWinner;
+//     for (let i=0; i<5; i++){
+//         playRound();
+//     }
+//     if (userScore !== computerScore){
+//         roundWinner = userScore > computerScore ? "user" : "computer";
+//         return 'The winner is the ' + roundWinner;
+//     }
+//     else {
+//         return 'We have a draw!';
+//     }
+// }
