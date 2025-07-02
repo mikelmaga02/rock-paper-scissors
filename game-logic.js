@@ -85,5 +85,26 @@ function checkWinner(){
         setTimeout(() => {
           alert(`Game over, the ${winner} has won!`);  
         }, 1000);  
+        restartGame();
     }
+}
+
+function restartGame(){
+    // Reset game counters
+    roundCounter = 0;
+    userScore = 0;
+    computerScore = 0;
+    // Reset table
+    tableClass.innerHTML = "";
+    
+    let newTableHeader1 = document.createElement("th");
+    let newTableHeader2 = document.createElement("th");
+    let newTableHeader3 = document.createElement("th");
+
+    newTableHeader2.textContent = "User Score";
+    newTableHeader3.textContent = "Computer Score";
+
+    tableClass.appendChild(newTableHeader1);
+    tableClass.appendChild(newTableHeader2);
+    tableClass.appendChild(newTableHeader3);
 }
