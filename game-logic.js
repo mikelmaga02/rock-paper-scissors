@@ -6,6 +6,7 @@
 // Initialise variables to keep track of game score
 let computerScore = 0; 
 let userScore = 0;
+let roundCounter = 0;
 
 function getComputerChoice(){
     // Randomise selection process through Math.random(); as we have 3 choices, multiply result by 3
@@ -14,59 +15,75 @@ function getComputerChoice(){
 }
 
 let buttonContainer = document.querySelector(".button-container");
-buttonContainer.addEventListener('click', function clicker(event) {
+buttonContainer.addEventListener('click', (event) => {
+    roundCounter += 1;
     let target = event.target;
 
     switch(target.id) {
         case 'rock':
-            playRound(getComputerChoice(), 0)
+            playRound(getComputerChoice(), 0);
             break;
         case 'paper':
-            playRound(getComputerChoice(), 1)
+            playRound(getComputerChoice(), 1);
             break;
         case 'scissors':
-            playRound(getComputerChoice(), 2)
+            playRound(getComputerChoice(), 2);
             break;
     }
 });
 
 function playRound(computerChoice, userChoice){
-    // No need to check draws
-    if (computerChoice === 0 && userChoice === 2){
-        // Rock beats scissors
-        computerScore += 1;
+    if (computerChoice === userChoice){
+        updateTable();
+        return;
     }
-    else if (computerChoice === 0 && userChoice === 1){
-        userScore += 1;
+    switch (computerChoice) {
+        case 0:
+            if (userChoice === 1) userScore += 1;
+            else computerScore += 1;
+            break;
+        case 1:
+            if (userChoice === 2) userScore += 1;
+            else computerScore += 1;
+            break;
+        case 2:
+            if (userChoice === 0) userScore += 1;
+            else computerScore += 1;
+            break;
     }
-    else if (computerChoice === 1 && userChoice === 0){
-        // Paper beats rock
-        computerScore += 1;
-    }
-    else if (computerChoice === 1 && userChoice === 2){
-        userScore += 1;
-    }
-    else if (computerChoice === 2 && userChoice === 1){
-        // Scissors beat paper
-        computerScore += 1;
-    }
-    else if (computerChoice === 2 && userChoice === 0){
-        userScore += 1;
-    }
-    console.log(`Round finished. User score is ${userScore}, computer score is ${computerScore}`)
+    updateTable();
+    checkWinner();
 }
 
+const tableClass = document.querySelector(".results");
 
-// function playGame(){
-//     let roundWinner;
-//     for (let i=0; i<5; i++){
-//         playRound();
-//     }
-//     if (userScore !== computerScore){
-//         roundWinner = userScore > computerScore ? "user" : "computer";
-//         return 'The winner is the ' + roundWinner;
-//     }
-//     else {
-//         return 'We have a draw!';
-//     }
-// }
+function updateTable(){
+    // Function that updates the table dynamically, as the user clicks the buttons/plays rounds
+    // Adds new rows to the table to show the player an up to date score
+    let newRow = document.createElement("tr");
+
+    let newEntry1 = document.createElement("td");
+    let newEntry2 = document.createElement("td");
+    let newEntry3 = document.createElement("td");
+
+    newEntry1.textContent = `Round ${roundCounter}`;
+    newEntry2.textContent = userScore;
+    newEntry2.style.textAlign = "center";   
+    newEntry3.textContent = computerScore;
+    newEntry3.style.textAlign = "center"; 
+
+    newRow.appendChild(newEntry1);
+    newRow.appendChild(newEntry2);
+    newRow.appendChild(newEntry3);
+
+    tableClass.appendChild(newRow);
+}
+
+function checkWinner(){
+    if (userScore === 5 || computerScore === 5){
+        let winner = userScore === 5 ? "user" : "computer";
+        setTimeout(() => {
+          alert(`Game over, the ${winner} has won!`);  
+        }, 1000);  
+    }
+}
